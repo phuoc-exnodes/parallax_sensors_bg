@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+
 import 'parallax_sensors.dart';
+
 export 'parallax_sensors.dart';
 
 class Layer {
@@ -143,8 +146,8 @@ class Layer {
                       height: imageHeight,
                       width: imageWidth,
                       decoration: BoxDecoration(
-                          color:
-                              Colors.black.withOpacity(imageDarkenValue ?? 0)),
+                          color: Colors.black
+                              .withValues(alpha: imageDarkenValue ?? 0)),
                     ),
                   ),
                 ),
@@ -252,7 +255,7 @@ class _ParallaxState extends State<Parallax> {
     switch (widget.sensor) {
       case ParallaxSensor.accelerometer:
         _accelerometerSensorEvent =
-            accelerometerEvents.listen((AccelerometerEvent event) {
+            accelerometerEventStream().listen((AccelerometerEvent event) {
           setState(() {
             _maxSensitivity = 10;
             _top = widget.lockVerticalAxis
@@ -280,8 +283,8 @@ class _ParallaxState extends State<Parallax> {
         break;
 
       case ParallaxSensor.userAccelerometer:
-        _userAccelerometerSensorEvent =
-            userAccelerometerEvents.listen((UserAccelerometerEvent event) {
+        _userAccelerometerSensorEvent = userAccelerometerEventStream()
+            .listen((UserAccelerometerEvent event) {
           setState(() {
             _maxSensitivity = 10;
             _top = widget.lockVerticalAxis
@@ -309,7 +312,8 @@ class _ParallaxState extends State<Parallax> {
         break;
 
       case ParallaxSensor.gyroscope:
-        _gyroscopeSensorEvent = gyroscopeEvents.listen((GyroscopeEvent event) {
+        _gyroscopeSensorEvent =
+            gyroscopeEventStream().listen((GyroscopeEvent event) {
           setState(() {
             _maxSensitivity = 10;
             _top = widget.lockVerticalAxis
@@ -338,7 +342,7 @@ class _ParallaxState extends State<Parallax> {
 
       case ParallaxSensor.magnetometer:
         _magnetometerSensorEvent =
-            magnetometerEvents.listen((MagnetometerEvent event) {
+            magnetometerEventStream().listen((MagnetometerEvent event) {
           setState(() {
             _maxSensitivity = 50;
             _top = widget.lockVerticalAxis
